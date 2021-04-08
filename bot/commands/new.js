@@ -31,9 +31,10 @@ class Article {
   }
 }
 
+const verify = require('./other/verify.js');
 
 exports.run = async function(db, msg, args) {
-  var article = new Article(args[0], args[1], args[2], args[3], args[4], args[5]);
+  var article = new Article(args[0], args[1], args[2], Number(args[3]), Number(args[4]), Number(args[5]));
   var ref = await db.collection('Test').doc('articles');
   var doc = await ref.get();
   var newArticle = "article" + randint(1, 99999)
@@ -58,12 +59,14 @@ exports.run = async function(db, msg, args) {
     am_pm: article.am_pm,
     id: newArticle
   }, _))
+  var list = doc.data().list;
+  appendData(list, {[Number(getNewestKey(list))]: newArticle})
   var queue = doc.data().queue;
   //Add Article to queue
   
 
 
-
+  const whitelist = doc.data().whitelist;
   appendData(queue, {
     id: newArticle,
     time: {
@@ -74,7 +77,12 @@ exports.run = async function(db, msg, args) {
     article: key,
     passed: false
   })
-  await ref.set({
-    allArticles, queue
-  })
+  if (await verify.run(args, db, msg) == true) {
+    await ref.set({
+      allArticles, queue, whitelist, list
+    })
+  }
+  else {
+    return msg.channel.send("Invalid Permissions")
+  }
 }

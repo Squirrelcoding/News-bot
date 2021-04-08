@@ -14,7 +14,7 @@ exports.run = async function(msg, args, db) {
   const ref = await db.collection("Test").doc("articles");
   const doc = await ref.get();
   var whitelist = doc.data().whitelist;
-  appendData(whitelist, addedUser);
+  appendData(whitelist, Number(addedUser));
   await ref.update({
     whitelist
   })
