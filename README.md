@@ -2,7 +2,7 @@
 Publish and delete articles on your discord server! Must be ran client side.
 
 # Upcoming Updates
-- Will add admin board in server
+- Will add admin board that will be hosted on localhost
 
 # Added features in inDEV v1.3
 - Added value "main" so ONLY the admin can remove and add permitted users
