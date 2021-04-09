@@ -13,12 +13,17 @@ exports.run = async function (msg, args, db, admin) {
         c: length
       })
       const FieldValue = admin.firestore.FieldValue
-      await ref.set({
-        whitelist: {
-          [i]: FieldValue.delete()
-        }
-      }, {merge:true})
-      return msg.channel.send("Successfully removed user!")
+      if (msg.author.id == doc.data().main) {
+        await ref.set({
+          whitelist: {
+            [i]: FieldValue.delete()
+          }
+        }, {merge:true})
+        return msg.channel.send("Successfully removed user: " + args[0])
+      }
+      else {
+        return msg.channel.send("Invalid Permissions! Only the main admin can add or remove permitted users!")
+      }
     }
     else {
       continue;

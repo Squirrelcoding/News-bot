@@ -14,9 +14,15 @@ exports.run = async function(msg, args, db) {
   const ref = await db.collection("Test").doc("articles");
   const doc = await ref.get();
   var whitelist = doc.data().whitelist;
-  appendData(whitelist, Number(addedUser));
-  await ref.update({
-    whitelist
-  })
+  if (msg.author.id == doc.data().main) {
+    appendData(whitelist, Number(addedUser));
+    await ref.update({
+      whitelist
+    })
+    msg.channel.send("Successfully added user:" + args[0])
+  }
+  else {
+    msg.channel.send("Invalid Permissions! Only the main admin can add or remove permitted users!")
+  }
 }
 //738517191460126760

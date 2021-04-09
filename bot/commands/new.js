@@ -38,16 +38,7 @@ exports.run = async function(db, msg, args) {
   var ref = await db.collection('Test').doc('articles');
   var doc = await ref.get();
   var newArticle = "article" + randint(1, 99999)
- /* await ref.set({
-    [newArticle]: {
-      title: article.title,
-      imgURL: article.url,
-      des: article.des,
-      day: article.day,
-      time: article.time,
-      am_pm: article.am_pm
-    }
-  })*/
+
   var allArticles = doc.data().allArticles; 
   var key = getNewestKey(allArticles, _);
   console.log(appendData(allArticles, {
@@ -57,7 +48,8 @@ exports.run = async function(db, msg, args) {
     day: article.day,
     time: article.time,
     am_pm: article.am_pm,
-    id: newArticle
+    id: newArticle,
+    published: false
   }, _))
   var list = doc.data().list;
   appendData(list, {[Number(getNewestKey(list))]: newArticle})
@@ -67,6 +59,7 @@ exports.run = async function(db, msg, args) {
 
 
   const whitelist = doc.data().whitelist;
+  const main = doc.data().main
   appendData(queue, {
     id: newArticle,
     time: {
@@ -75,11 +68,11 @@ exports.run = async function(db, msg, args) {
       am_pm: article.am_pm
     },
     article: key,
-    passed: false
+    published: false
   })
   if (await verify.run(args, db, msg) == true) {
     await ref.set({
-      allArticles, queue, whitelist, list
+      allArticles, queue, whitelist, list, main
     })
   }
   else {

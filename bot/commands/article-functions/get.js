@@ -10,9 +10,15 @@ exports.run = async function(msg, db, args) {
       var title = doc.data().allArticles[i].title;
       var des = doc.data().allArticles[i].des;
       var imgURL = doc.data().allArticles[i].imgURL;
-      await msg.channel.send("***" + title + "*** \n", {files: [imgURL]});
-      await msg.channel.send(des)
-      found = true
+      if (doc.data().allArticles[i].published == true) {
+        await msg.channel.send("***" + title + "*** \n", {files: [imgURL]});
+        await msg.channel.send(des)
+        found = true
+      }
+      else {
+        msg.channel.send("Article exists however it is not published.")
+        found = true
+      }
     }
     if (i == length-1 && found == false){
       msg.channel.send("No such article: " + args[0])

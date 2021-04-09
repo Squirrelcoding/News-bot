@@ -42,16 +42,12 @@ client.on('message', msg => {
     const add = require('./commands/add-remove/add.js');
     add.run(msg, args, db);
   }
-  if (command == "test") {
-      const test = require('./commands/other/verify.js');
-      test.run(args, db, msg)
-  }
   if (command == "date") {
     var publish = require('./commands/publish.js');
     publish.run(msg, db, admin)
   }
   if (command == "help") {
-    msg.channel.send("‌n‌e‌w <title> <url> <des> <day> <hour> <am-pm>")
+    msg.reply("‌Check out https://www.softsquirrel.tk/docs/newsbot.html for The News Bot documentation!")
   }
   if (command == "remove") {
     const remove = require('./commands/add-remove/remove.js')
@@ -63,7 +59,7 @@ client.on('message', msg => {
   }
   if (command == "list") {
     const list = require('./commands/article-functions/list.js');
-    list.run(msg, db)
+    list.run(msg, db, args)
   }
   if (command == "get") {
     const get = require('./commands/article-functions/get.js');

@@ -21,13 +21,18 @@ exports.run= async function(msg, db, admin, _) {
         }
         if (time.day == 0 && time.hour == 0) {
           if (time.pmam == 0) {
+            console.log(i)
             var title = doc.data().allArticles[i].title;
             var des = doc.data().allArticles[i].des;
             var imgURL = doc.data().allArticles[i].imgURL;
             await msg.channel.send("***" + title + "*** \n", {files: [imgURL]});
             await msg.channel.send(des)
-            
-
+            var passed = doc.data().allArticles[i].published
+            doc.data().allArticles[i].published = true;
+            var path = 'allArticles.' + i + '.published';
+            await ref.update({
+              [path]: true
+            })
             const FieldValue = admin.firestore.FieldValue
             await ref.set({
               queue: {
