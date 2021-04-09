@@ -11,9 +11,28 @@ exports.run = async function (msg, args, db, admin) {
     a: removedArticle,
     b: length
   })
+
+  var list = doc.data().list;
+  var length2 = 1 + Number(_.max(Object.keys(list), o => list[o] ));
+  for (var a=0;a<length2;a++){
+    const FieldValue = admin.firestore.FieldValue
+    if (list[a][a] == args[0]) {
+      await ref.set({
+        list: {
+          [a]: FieldValue.delete()
+        }
+      }, {merge:true})
+    }
+    else if (a==length2) {
+      msg.channel.send("Failed to find article '" + args[0] + "' in list.")
+    }
+  }
+
+
   for (var i=0;i<length;i++) {
     console.log(allArticles[i])
     console.log(i)
+
     if (allArticles[i].id == removedArticle) {
       console.log({
         a: i,

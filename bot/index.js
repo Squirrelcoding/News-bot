@@ -42,7 +42,7 @@ client.on('message', msg => {
     const add = require('./commands/add-remove/add.js');
     add.run(msg, args, db);
   }
-  if (command == "date") {
+  if (command == "check") {
     var publish = require('./commands/publish.js');
     publish.run(msg, db, admin)
   }

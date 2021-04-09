@@ -34,7 +34,7 @@ class Article {
 const verify = require('./other/verify.js');
 
 exports.run = async function(db, msg, args) {
-  var article = new Article(args[0], args[1], args[2], Number(args[3]), Number(args[4]), Number(args[5]));
+  var article = new Article(args[0], args[1], args[2], Number(args[3]), Number(args[4]), args[5]);
   var ref = await db.collection('Test').doc('articles');
   var doc = await ref.get();
   var newArticle = "article" + randint(1, 99999)

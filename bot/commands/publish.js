@@ -4,7 +4,12 @@ exports.run= async function(msg, db, admin, _) {
   var hours = Number(dateObj.getHours());
   var ampm = (hours >= 12) ? "PM" : "AM";
   if (ampm == "PM") {
-    hours = 24  - hours
+    if (hours == 20 || hours == 21) {
+      hours = hours - 2
+    }
+    else {
+      hours = hours - 12
+    }
   } 
   var ref = await db.collection("Test").doc("articles");
   var doc = await ref.get();
@@ -20,14 +25,15 @@ exports.run= async function(msg, db, admin, _) {
           hour: doc.data().queue[i].time.time
         }
         if (time.day == 0 && time.hour == 0) {
-          if (time.pmam == 0) {
+          var published = doc.data().queue[i].published
+          if (time.pmam == 0 && published == false) {
             console.log(i)
             var title = doc.data().allArticles[i].title;
             var des = doc.data().allArticles[i].des;
             var imgURL = doc.data().allArticles[i].imgURL;
+            console.log(imgURL)
             await msg.channel.send("***" + title + "*** \n", {files: [imgURL]});
             await msg.channel.send(des)
-            var passed = doc.data().allArticles[i].published
             doc.data().allArticles[i].published = true;
             var path = 'allArticles.' + i + '.published';
             await ref.update({
@@ -42,14 +48,19 @@ exports.run= async function(msg, db, admin, _) {
           }
         }
 
-        else if (day == time.day && hours == time.hour) {
-          if (ampm == time.pmam) {
+        else if (day >= time.day && hours >= time.hour) {
+          var published = doc.data().queue[i].published
+          if (ampm == time.pmam && published == false) {
             var title = doc.data().allArticles[i].title;
             var des = doc.data().allArticles[i].des;
-            var imgURL = doc.data().allArticles[i].url;
-            msg.channel.send("***" + title + "*** \n", {files: [imgURL]});
-            msg.channel.send(des)
-
+            var imgURL = doc.data().allArticles[i].imgURL;
+            await msg.channel.send("***" + title + "*** \n", {files: [imgURL]});
+            await msg.channel.send(des)
+            doc.data().allArticles[i].published = true;
+            var path = 'allArticles.' + i + '.published';
+            await ref.update({
+              [path]: true
+            })
 
             const FieldValue = admin.firestore.FieldValue
             await ref.set({
