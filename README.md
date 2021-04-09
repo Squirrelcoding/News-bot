@@ -18,7 +18,7 @@ For now you have to read the code and set up everything including Firebase. Ther
 
 
 # a little tree to help navigating
-
+```
 ├── README.md \
 ├── bot     \
 │   ├── commands\
@@ -38,3 +38,4 @@ For now you have to read the code and set up everything including Firebase. Ther
 ├── package.json \
 └── server \
     └── server.js \
+```
