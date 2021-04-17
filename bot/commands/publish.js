@@ -1,3 +1,5 @@
+const moment = require('moment')
+
 exports.run= async function(msg, db, admin, _) {
   var dateObj = new Date();
   var day = Number(dateObj.getUTCDate());
@@ -27,16 +29,22 @@ exports.run= async function(msg, db, admin, _) {
         if (time.day == 0 && time.hour == 0) {
           var published = doc.data().queue[i].published
           if (time.pmam == 0 && published == false) {
-            console.log(i)
+          
             var title = doc.data().allArticles[i].title;
             var des = doc.data().allArticles[i].des;
             var imgURL = doc.data().allArticles[i].imgURL;
-            console.log(imgURL)
+            var author = (doc.data().allArticles[i].anonymous == 'false') ? doc.data().allArticles[i].author : "Anonymous"
+            
             await msg.channel.send("***" + title + "*** \n", {files: [imgURL]});
             await msg.channel.send(des)
+            await msg.channel.send("Author: " + author)
+            await msg.channel.send("Date: " + moment().format('MMMM Do YYYY, h:mm:ss a'))
+
             doc.data().allArticles[i].published = true;
             var path = 'allArticles.' + i + '.published';
+            var time = 'allArticles.' + i + '.exactTime'; 
             await ref.update({
+              [time]: moment().format('MMMM Do YYYY, h:mm:ss a'),
               [path]: true
             })
             const FieldValue = admin.firestore.FieldValue
@@ -70,10 +78,6 @@ exports.run= async function(msg, db, admin, _) {
             }, {merge: true})
           }
         }
-
-
       }
   }
-
-
 }
