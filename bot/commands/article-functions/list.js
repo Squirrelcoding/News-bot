@@ -9,8 +9,10 @@ exports.run = async function(msg, db, args) {
     var list = doc.data().list;
     var length = 1 + Number(_.max(Object.keys(list), o => list[o] ));
 
-    for (var i=0;i<length;i++) {
-        msg.channel.send(JSON.stringify(list[i]))
+    for (var i=1;i<length;i++) {
+      var listID = list[i][i]
+      console.log(listID)
+        msg.channel.send(JSON.stringify(listID).replace(/"/g, ''))
     } 
 
   }

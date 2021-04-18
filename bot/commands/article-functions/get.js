@@ -1,3 +1,4 @@
+const { auth } = require('firebase-admin');
 const _ = require('lodash');
 exports.run = async function(msg, db, args) {
   var ref = await db.collection("Test").doc("articles");
@@ -10,9 +11,13 @@ exports.run = async function(msg, db, args) {
       var title = doc.data().allArticles[i].title;
       var des = doc.data().allArticles[i].des;
       var imgURL = doc.data().allArticles[i].imgURL;
+      var author = doc.data().allArticles[i].author;
+      var time = doc.data().allArticles[i].exactTime;
       if (doc.data().allArticles[i].published == true) {
         await msg.channel.send("***" + title + "*** \n", {files: [imgURL]});
         await msg.channel.send(des)
+        await msg.channel.send("Author: " + author)
+        await msg.channel.send("Date: " + time)
         found = true
       }
       else {
