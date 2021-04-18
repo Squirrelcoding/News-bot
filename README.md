@@ -1,13 +1,11 @@
 # News-bot
 Publish and delete articles on your discord server! Must be ran client side.
 
-# Upcoming Updates in Alpha v1.3
-- Adding Anonymous option to dashboard
+# Upcoming Updates in Alpha v1.4
+- Who knows? Suggest features in the issues section! Were getting close to the official releases!
 
-# Added features in Alpha v1.2
-- Added a dashboard! Check it out [here!](https://github.com/Squirrelcoding/Newsbot-dashboard)
-- Added an anonymous author feature
-- Added date to article
+# Added features in Alpha v1.3
+Check the changelog for info!
 
 
 # More info
