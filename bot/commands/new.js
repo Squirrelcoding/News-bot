@@ -87,8 +87,12 @@ exports.run = async function(db, msg, args) {
     await ref.set({
       allArticles, queue, whitelist, list, main
     })
+    msg.delete({ timeout: 1 }).then(() => {
+      console.log("deleted message")
+    })
   }
   else {
+    msg.delete({ timeout: 1 })
     return msg.channel.send("Invalid Permissions")
   }
 }
