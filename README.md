@@ -1,11 +1,11 @@
 # News-bot
 Publish and delete articles on your discord server! Must be ran client side.
 
-# Upcoming Updates in Alpha v1.4
+# Upcoming Updates in Alpha v1.5
 - Who knows? Suggest features in the issues section! Were getting close to the official releases!
 
-# Added features in Alpha v1.3
-Check the changelog for info!
+# Added features in Alpha v1.4
+- Deletes the message that the author published the article in.
 
 
 # More info
