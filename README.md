@@ -18,23 +18,35 @@ For now you have to read the code and set up everything including Firebase. Ther
 
 # a little tree to help navigating
 ```
-├── README.md 
-├── bot     
+.
+├── LICENSE
+├── README.md
+├── bot
 │   ├── commands
-│   │   ├── add-remove 
-│   │   │   ├── add.js 
-│   │   │   └── remove.js 
-│   │   ├── article-functions 
-│   │   │   ├── delete.js 
-│   │   │   ├── get.js  
-│   │   │   └── list.js 
-│   │   ├── getArticle.js 
-│   │   ├── new.js 
-│   │   ├── other 
-│   │   │   └── verify.js 
-│   │   └── publish.js 
-│   └── index.js 
-├── package.json 
-└── server 
-    └── server.js 
+│   │   ├── add-remove       
+│   │   │   ├── add.js       
+│   │   │   └── remove.js    
+│   │   ├── article-functions
+│   │   │   ├── delete.js    
+│   │   │   ├── get.js
+│   │   │   └── list.js
+│   │   ├── getArticle.js
+│   │   ├── new.js
+│   │   ├── other
+│   │   │   └── verify.js
+│   │   └── publish.js
+│   └── index.js
+├── changelogs
+│   ├── Alpha 1-2.md
+│   ├── Alpha1-1.md
+│   └── Alpha1-3.md
+├── data.json
+├── package-lock.json
+├── package.json
+├── plans.md
+└── server
+    ├── NOTICE.md
+    ├── server.js
+    └── views
+        └── index.ejs
 ```
