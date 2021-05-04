@@ -64,8 +64,15 @@ exports.run= async function(msg, db, admin, _) {
             var title = doc.data().allArticles[i].title;
             var des = doc.data().allArticles[i].des;
             var imgURL = doc.data().allArticles[i].imgURL;
-            await msg.channel.send("***" + title + "*** \n", {files: [imgURL]});
-            await msg.channel.send(des)
+            var author = (doc.data().allArticles[i].anonymous == 'false') ? doc.data().allArticles[i].author : "Anonymous";
+            const embed = new Discord.MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle(title)
+            .setAuthor(author)
+            .setDescription(des)
+            .setImage(imgURL)
+            .setFooter('Published' + moment().format('MMMM Do YYYY, h:mm:ss a'));
+            msg.channel.send(embed);
             doc.data().allArticles[i].published = true;
             var path = 'allArticles.' + i + '.published';
             await ref.update({
