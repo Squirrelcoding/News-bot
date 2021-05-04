@@ -38,6 +38,16 @@ client.on('message', msg => {
 client.on('message', msg => {
   const args = msg.content.slice(prefix.length).split(/ +/);
 	const command = args.shift().toLowerCase();
+  if (command == "test") {
+    const exampleEmbed = new Discord.MessageEmbed()
+    .setColor('#0099ff')
+    .setTitle('Some title')
+    .setAuthor('Some name')
+    .setDescription('Some description here')
+    .setThumbnail('https://i.imgur.com/wSTFkRM.png')
+    .setFooter('Some footer text here');
+    msg.channel.send(exampleEmbed);
+  }
   if (command == "add") {
     const add = require('./commands/add-remove/add.js');
     add.run(msg, args, db);

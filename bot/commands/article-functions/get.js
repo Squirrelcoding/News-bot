@@ -1,5 +1,6 @@
 const { auth } = require('firebase-admin');
 const _ = require('lodash');
+const Discord = require('discord.js')
 exports.run = async function(msg, db, args) {
   var ref = await db.collection("Test").doc("articles");
   var doc = await ref.get();
@@ -14,10 +15,14 @@ exports.run = async function(msg, db, args) {
       var author = doc.data().allArticles[i].author;
       var time = doc.data().allArticles[i].exactTime;
       if (doc.data().allArticles[i].published == true) {
-        await msg.channel.send("***" + title + "*** \n", {files: [imgURL]});
-        await msg.channel.send(des)
-        await msg.channel.send("Author: " + author)
-        await msg.channel.send("Date: " + time)
+        const embed = new Discord.MessageEmbed()
+        .setColor('#0099ff')
+        .setTitle(title)
+        .setAuthor(author)
+        .setDescription(des)
+        .setImage(imgURL)
+        .setFooter('Published ' + time);
+        msg.channel.send(embed);
         found = true
       }
       else {
